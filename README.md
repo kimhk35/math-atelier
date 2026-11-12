@@ -1,23 +1,23 @@
 # McKay Math Atelier
 
-Production website: https://atelier.mathmckay.kr/
+Production: https://atelier.mathmckay.kr/
 
-This repository preserves the complete static source recovered from the production deployment on 2026-11-12 and adds six Advanced Mathematics experiments.
+## Advanced mathematics
 
-## Build
+50 interactive experiments in 7 areas. Direct entry: /advanced-math/
 
-Run `npm run build`. The build extracts `site-source.tar.gz` into `public` and verifies every file against `source-manifest.json`. Vercel publishes `public` using the existing project.
+- Linear algebra: 10
+- Complex numbers: 8
+- Curves and polar coordinates: 6
+- Limits and analysis: 8
+- Multivariable calculus: 6
+- Numerical methods and models: 6
+- Discrete mathematics: 6
 
-The archive is a transport format for the recovered static site. Extract it to inspect or edit the HTML and JavaScript. Rebuild the archive and SHA-256 manifest together after changes. No dependencies or secrets are required.
+Each experiment includes parameters, special-case presets, a graph, numerical metrics, three inquiry prompts, teacher notes and locally saved written responses. Course 18 integrates all 50 experiments into the main catalogue and search.
 
-## Added routes
+## Source and build
 
-- `/#/list?grade=18`: Advanced Mathematics course with three units
-- `/advanced-math/`: six interactive experiments
-- `/#/lab/advanced-linear` and the other five experiment routes are shareable through the normal catalog
+The complete static source is in site-source.tar.gz. Extract it to edit. build.cjs extracts the site to public and verifies every file against source-manifest.json. No runtime dependencies. Existing production experiments and assets are preserved.
 
-The update preserves the existing 1029 experiments and adds six new experiments. Navigation includes the home course picker and global search. Service worker and offline asset inventory are updated.
-
-## Verification
-
-57 numerical preset and endpoint checks passed. Browser checks covered the home course card and unit navigation as well as all six experiments and persistence of inquiry notes. Original files were recovered using the public offline inventory. The original Vercel configuration was reconstructed from the deployment source viewer. Previous production deployment: BVgk6wwUxm6L29MMpuf2udQ3xyxV.
+Validation: 413 preset and parameter-boundary renders plus mathematical special cases. Public production checked through the browser.

@@ -7,4 +7,4 @@ for(const [relative,expected] of Object.entries(manifest)) {
  const actual=crypto.createHash('sha256').update(fs.readFileSync(path.join('public',relative))).digest('hex');
  if(actual!==expected)throw new Error('Source checksum mismatch: '+relative);
 }
-console.log('Verified '+Object.keys(manifest).length+' source files. Advanced Mathematics: 6 experiments.');
+console.log('Verified '+Object.keys(manifest).length+' source files. Advanced Mathematics: 50 experiments.');
