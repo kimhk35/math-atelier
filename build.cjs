@@ -8,3 +8,4 @@ for(const [relative,expected] of Object.entries(manifest)) {
  if(actual!==expected)throw new Error('Source checksum mismatch: '+relative);
 }
 console.log('Verified '+Object.keys(manifest).length+' source files. Advanced Mathematics: 50 experiments.');
+require('./integrate-paper.cjs');
