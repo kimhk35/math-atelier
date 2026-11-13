@@ -9,3 +9,5 @@ for(const [relative,expected] of Object.entries(manifest)) {
 }
 console.log('Verified '+Object.keys(manifest).length+' source files. Advanced Mathematics: 50 experiments.');
 require('./integrate-paper.cjs');
+
+require('./integrate-design.cjs');
