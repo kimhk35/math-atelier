@@ -71,4 +71,80 @@ for(let g=20;g<30;g++)for(let k=0;k<10;k++){
  }
  ACTS.push({id:'paper-'+String(g*10+k+1).padStart(3,'0'),number:g*10+k+1,group:g+1,topic:TOPICS[g],title,steps,formula,q,explain,w,h,points,rays});
 }
+// Twenty further geometric investigations with ten parameter variants apiece.
+TOPICS.push('삼각형의 내심','오일러 직선','구점원의 중심','수선의 발 삼각형','삼각형 넓이의 분할','체바 정리','메넬라우스 정리','안팎의 각이등분선','점에서 직선까지 거리','대칭이동과 거리','미끄럼반사의 합성','정다각형과 내접원','별다각형의 순환','다각형의 삼각분할','현의 길이와 중심각','원 안의 점과 현의 곱','산술평균과 기하평균','황금비 길이 작도','은비와 대각선','라디안과 호의 길이');
+for(let g=30;g<50;g++)for(let k=0;k<10;k++){
+ let steps=[],points=[],rays=[],guides=[],w=2,h=2,title='',formula='',q='',explain='';
+ const pt=(x,y,label='')=>({x,y,label}),P=pt(-.8,-.6,'A'),Q=pt(.8,-.6,'B'),R=pt(-.6+.13*k,.8,'C');
+ const mid=(a,b)=>pt((a.x+b.x)/2,(a.y+b.y)/2),dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y),crease=(a,b,c,text)=>st(a,b,c,text||'표시된 직선을 접고 펼쳐 자국을 남기세요.',true),join=(a,b,text)=>crease(b.y-a.y,a.x-b.x,(b.y-a.y)*a.x+(a.x-b.x)*a.y,text),bisect=(a,b)=>crease(b.x-a.x,b.y-a.y,(b.x*b.x+b.y*b.y-a.x*a.x-a.y*a.y)/2,'두 점을 포갠 뒤 펼치세요.');
+ const closed=ps=>guides.push([...ps,ps[0]]),arc=(cx,cy,r,a=0,b=2*Math.PI)=>guides.push(Array.from({length:121},(_,j)=>pt(cx+r*Math.cos(a+(b-a)*j/120),cy+r*Math.sin(a+(b-a)*j/120))));
+ const foot=(a,b,c)=>{let dx=c.x-b.x,dy=c.y-b.y,t=((a.x-b.x)*dx+(a.y-b.y)*dy)/(dx*dx+dy*dy);return pt(b.x+t*dx,b.y+t*dy)};
+ const O=pt(0,(R.x*R.x-.36)/2.8,'O'),G=pt(R.x/3,-.4/3,'G'),H=pt(R.x,-.6+(.64-R.x*R.x)/1.4,'H');
+ if(g===30){
+  let a=dist(Q,R),b=dist(R,P),c=dist(P,Q),I=pt((a*P.x+b*Q.x+c*R.x)/(a+b+c),(a*P.y+b*Q.y+c*R.y)/(a+b+c),'I');points=[P,Q,R,I];closed([P,Q,R]);
+  for(const [p,u,v]of[[P,Q,R],[Q,R,P],[R,P,Q]]){let d1=dist(p,u),d2=dist(p,v),end=pt(p.x+(u.x-p.x)/d1+(v.x-p.x)/d2,p.y+(u.y-p.y)/d1+(v.y-p.y)/d2);steps.push(join(p,end,'꼭짓점 '+p.label+'의 내각 이등분선을 접고 펼치세요.'))}arc(I.x,I.y,I.y+.6);
+  title='세 변에서 같은 거리 '+(k+1);formula='내심에서 세 변까지의 거리 = 내접원 반지름';q='외심에서 같은 것은 꼭짓점까지의 거리였습니다. 내심은 무엇이 같을까요?';explain='세 내각 이등분선은 내심 I에서 만납니다. 이 실험의 이등분선은 두 변의 단위방향 벡터 합으로 계산했습니다. 원은 관찰용 기준선입니다.';
+ }else if(g===31){
+  points=[P,Q,R,O,G,H];closed([P,Q,R]);guides.push([O,H]);steps=[bisect(P,Q),bisect(Q,R),join(R,foot(R,P,Q)),join(O,H,'O와 H를 지나는 직선을 접고 펼치세요.')];
+  title='외심과 무게중심과 수심 '+(k+1);formula='OG : GH = 1 : 2';q='삼각형을 바꾸어도 세 중심은 한 직선 위에 있을까요?';explain='정삼각형이 아닌 사례에서 외심 O와 무게중심 G 및 수심 H는 오일러 직선 위에 놓입니다. 정삼각형에서는 세 중심이 같아져 이 직선이 하나로 정해지지 않습니다.';
+ }else if(g===32){
+  let D=mid(P,Q),E=mid(Q,R),F=mid(R,P),N=mid(O,H);D.label='D';E.label='E';F.label='F';N.label='N';points=[P,Q,R,D,E,F,N];closed([P,Q,R]);closed([D,E,F]);arc(N.x,N.y,dist(O,P)/2);steps=[bisect(D,E),bisect(E,F),bisect(F,D)];
+  title='중점 삼각형의 외심 '+(k+1);formula='구점원 반지름 = 외접원 반지름 / 2';q='세 변의 중점이 놓이는 원의 중심은 O와 H 사이 어디일까요?';explain='세 변의 중점으로 만든 삼각형의 외심 N은 OH의 중점입니다. 이 원은 높이의 발과 꼭짓점에서 수심까지의 중점도 지나지만 여기서는 세 변의 중점을 먼저 확인합니다.';
+ }else if(g===33){
+  let D=foot(P,Q,R),E=foot(Q,R,P),F=foot(R,P,Q);D.label='D';E.label='E';F.label='F';points=[P,Q,R,D,E,F];closed([P,Q,R]);closed([D,E,F]);steps=[join(P,D),join(Q,E),join(R,F),join(D,E),join(E,F),join(F,D)];
+  title='세 높이의 발을 잇기 '+(k+1);formula='AD ⟂ BC / BE ⟂ CA / CF ⟂ AB';q='발로 만든 작은 삼각형의 꼭짓점은 어느 변 위에 있을까요?';explain='예각삼각형의 각 꼭짓점에서 맞은편 변으로 내린 수선의 발을 잇습니다. 일반적인 둔각삼각형에서는 발이 변의 연장선 위에 올 수 있습니다.';
+ }else if(g===34){
+  let r=(k+1)/11,D=pt(P.x+(Q.x-P.x)*r,P.y,'D');points=[P,Q,R,D];closed([P,Q,R]);steps=[join(R,D,'C에서 밑변의 지정한 점 D까지 접고 펼치세요.')];
+  title='밑변 비율 '+(k+1)+' 대 '+(10-k);formula='[ACD] : [BCD] = AD : DB';q='밑변이 달라도 높이가 같다면 넓이비는 어떻게 정해질까요?';explain='C에서 AB로 내린 높이가 두 삼각형에 공통입니다. 같은 높이를 갖는 삼각형의 넓이는 밑변 길이에 비례합니다. D는 눈금으로 지정했습니다.';
+ }else if(g===35){
+  let r=.3+.1*k,s=1.2,t=1/(r*s),D=pt((Q.x+r*R.x)/(1+r),(Q.y+r*R.y)/(1+r),'D'),E=pt((R.x+s*P.x)/(1+s),(R.y+s*P.y)/(1+s),'E'),F=pt((P.x+t*Q.x)/(1+t),(P.y+t*Q.y)/(1+t),'F');points=[P,Q,R,D,E,F];closed([P,Q,R]);steps=[join(P,D),join(Q,E),join(R,F)];
+  title='세 선의 한 점 모임 '+(k+1);formula='(BD/DC)(CE/EA)(AF/FB) = 1';q='세 분할비 중 두 개를 정하면 나머지는 어떻게 정해야 할까요?';explain='세 점이 각각 변의 내부에 있는 체바 정리의 사례입니다. 세 꼭짓점에서 마주 보는 분할점을 이은 선은 한 점에서 만납니다. 세 비율은 눈금으로 지정했습니다.';
+ }else if(g===36){
+  let r=.28+.02*k,s=.62+.02*k,D=pt(P.x+r*(Q.x-P.x),P.y,'D'),E=pt(P.x+s*(R.x-P.x),P.y+s*(R.y-P.y),'E');
+  let u={x:E.x-D.x,y:E.y-D.y},v={x:R.x-Q.x,y:R.y-Q.y},cross=(a,b)=>a.x*b.y-a.y*b.x,t=cross({x:Q.x-D.x,y:Q.y-D.y},v)/cross(u,v),F=pt(D.x+t*u.x,D.y+t*u.y,'F');
+  let list=[P,Q,R,D,E,F],xmin=Math.min(...list.map(p=>p.x)),xmax=Math.max(...list.map(p=>p.x)),ymin=Math.min(...list.map(p=>p.y)),ymax=Math.max(...list.map(p=>p.y)),scale=1.6/Math.max(xmax-xmin,ymax-ymin);for(let p of list){p.x=(p.x-(xmin+xmax)/2)*scale;p.y=(p.y-(ymin+ymax)/2)*scale}
+  points=list;closed([P,Q,R]);guides.push([Q,F]);steps=[join(D,E,'두 분할점을 지나는 직선을 접고 펼치세요.')];title='한 직선의 세 교점 '+(k+1);formula='(AD/DB)(BF/FC)(CE/EA) = 1';q='한 점이 변의 연장선 위에 놓이는 이유는 무엇일까요?';explain='D와 E는 두 변 내부에 있고 F는 나머지 변의 연장선에 있는 메넬라우스 정리의 사례입니다. 식은 양의 길이로 쓴 곱이며 유향선분의 부호 규약에서는 −1로 표현합니다. 보기 좋게 전체 도형을 같은 비율로 축소했습니다.';
+ }else if(g===37){
+  let a=(30+10*k)*Math.PI/180;points=[pt(0,0,'O')];rays=[0,30+10*k];steps=[crease(-Math.sin(a/2),Math.cos(a/2),0,'안쪽 이등분선을 접고 펼치세요.'),crease(Math.cos(a/2),Math.sin(a/2),0,'바깥쪽 이등분선을 접고 펼치세요.')];
+  title='내각과 외각의 이등분선 '+(k+1);formula='두 이등분선이 이루는 각 = 90°';q='원래 각이 달라져도 두 이등분선은 수직일까요?';explain='내각과 인접 외각의 합이 180°이므로 각각의 절반을 더하면 90°입니다. 접는 선은 각도 좌표로 지정합니다.';
+ }else if(g===38){
+  let t=k*Math.PI/30,a=-Math.sin(t),b=Math.cos(t),c=-.15,p=pt(.25,.65,'P'),d=a*p.x+b*p.y-c,hp=pt(p.x-d*a,p.y-d*b,'H');points=[p,hp];guides.push([p,hp]);steps=[crease(a,b,c,'기준 직선을 접고 펼치세요.'),join(p,hp,'P를 지나고 기준선에 수직인 직선을 접고 펼치세요.')];
+  title='가장 짧은 길이 '+(k+1);formula='PH = |aPₓ+bPᵧ−c| / √(a²+b²)';q='직선 위 다른 점으로 가는 길이보다 PH가 짧은 이유는 무엇일까요?';explain='점에서 직선까지의 거리는 수선의 발까지의 거리입니다. 수직 성분과 평행 성분으로 나누어 피타고라스 정리로 최소성을 증명할 수 있습니다.';
+ }else if(g===39){
+  let c=-.1+.025*k,p=pt(-.6,-.4,'P'),v=pt(.4,.5,'Q'),p1=pt(2*c-p.x,p.y,'P′'),v1=pt(2*c-v.x,v.y,'Q′');points=[p,v,p1,v1];guides.push([p,v],[p1,v1]);steps=[crease(1,0,c,'P와 P′가 포개지는 축을 접고 펼치세요.')];
+  title='두 점의 거리가 보존되는가 '+(k+1);formula='PQ = P′Q′';q='점의 위치가 달라져도 어떤 길이와 각은 그대로일까요?';explain='x=c에 대한 대칭이동은 (x y)를 (2c−x y)로 보냅니다. 두 점 차이의 첫 성분은 부호만 바뀌므로 거리의 제곱이 보존됩니다.';
+ }else if(g===40){
+  let d=.1+.02*k,p=pt(-.5,-.35,'P'),p1=pt(p.x+2*d,-p.y,'P′');points=[p,p1];guides.push([p,p1]);steps=[crease(1,0,-d/2,'첫 세로축 자국을 남기세요.'),crease(1,0,d/2,'둘째 세로축 자국을 남기세요.'),crease(0,1,0,'가로축 자국을 남기세요.')];
+  title='이동과 반사가 함께 '+(k+1);formula='(x y) → (x+2d −y)';q='이 변환에서 움직이지 않는 점을 찾을 수 있을까요?';explain='세 자국을 대칭축으로 순서대로 적용하면 가로 2d 이동 후 가로축 반사가 됩니다. d>0이므로 고정점이 없습니다. 종이 자체를 세 번 연속 이동시키는 대신 자국과 기준점을 비교합니다.';
+ }else if(g===41){
+  let n=k+3,r=.85,verts=Array.from({length:n},(_,j)=>pt(r*Math.cos(2*Math.PI*j/n),r*Math.sin(2*Math.PI*j/n))),apothem=r*Math.cos(Math.PI/n);closed(verts);arc(0,0,apothem);points=[pt(0,0,'O')];for(let j=0;j<n;j++)steps.push(join(verts[j],verts[(j+1)%n]));
+  title='정'+n+'각형과 안쪽 원';formula='넓이 = 둘레 × 내접원 반지름 / 2';q='중심에서 변까지 거리가 같으면 넓이를 어떻게 나눌 수 있을까요?';explain='원의 반지름 0.85 위에 꼭짓점을 배치한 정다각형입니다. 변을 접는 자국으로 표시합니다. 원의 접점은 각 변의 중점이며 중심에서 만든 삼각형의 높이가 같습니다.';
+ }else if(g===42){
+  let n=k+5,step=2,verts=Array.from({length:n},(_,j)=>pt(.85*Math.cos(2*Math.PI*j/n),.85*Math.sin(2*Math.PI*j/n))),j=0,seen=new Set(),seq=[];while(!seen.has(j)){seen.add(j);seq.push(j);let next=(j+step)%n;steps.push(join(verts[j],verts[next]));j=next}closed(seq.map(i=>verts[i]));points=verts.map((p,j)=>pt(p.x,p.y,String(j)));
+  title=n+'개 점에서 두 칸씩 잇기';formula='한 순환의 꼭짓점 수 = n / gcd(n 2)';q='점의 수가 짝수일 때와 홀수일 때 모든 점을 방문하나요?';explain='한 꼭짓점에서 시작해 두 칸씩 건너뜁니다. 홀수 n에서는 모든 꼭짓점을 방문하고 짝수 n에서는 두 순환으로 분리됩니다. 화면은 시작점 0의 한 순환을 표시합니다.';
+ }else if(g===43){
+  let n=k+3,v=Array.from({length:n},(_,j)=>pt(.85*Math.cos(2*Math.PI*j/n),.85*Math.sin(2*Math.PI*j/n)));closed(v);for(let j=0;j<n;j++)steps.push(join(v[j],v[(j+1)%n]));for(let j=2;j<n-1;j++)steps.push(join(v[0],v[j],'한 꼭짓점에서 대각선을 접고 펼치세요.'));
+  title=n+'각형을 삼각형으로';formula='삼각형 수 = n−2 / 내부 대각선 수 = n−3';q='종이 전체의 조각 수와 다각형 안의 삼각형 수는 같을까요?';explain='볼록 정다각형 내부만 셉니다. 하나의 꼭짓점에서 삼각분할하면 내부 삼각형은 n−2개입니다. 정사각형 종이의 바깥 조각은 포함하지 않습니다.';
+ }else if(g===44){
+  let a=(20+15*k)*Math.PI/180,r=.8,A=pt(r,0,'A'),B=pt(r*Math.cos(a),r*Math.sin(a),'B');points=[pt(0,0,'O'),A,B];arc(0,0,r);guides.push([A,pt(0,0),B]);steps=[join(A,B),bisect(A,B)];
+  title=(20+15*k)+'° 중심각의 현';formula='현의 길이 = 2r sin(θ/2)';q='중심각이 두 배면 현의 길이도 두 배일까요?';explain='현의 중점으로 내린 수선이 중심각을 이등분합니다. 반쪽 이등변삼각형에서 사인 비율로 길이를 구합니다. 각도는 도 단위로 표시합니다.';
+ }else if(g===45){
+  let r=.8,p=pt(.2+.02*k,0,'P'),t=(10+8*k)*Math.PI/180,u={x:Math.cos(t),y:Math.sin(t)},b=p.x*u.x,root=Math.sqrt(b*b+r*r-p.x*p.x),lo=-b-root,hi=-b+root,A=pt(p.x+lo*u.x,lo*u.y,'A'),B=pt(p.x+hi*u.x,hi*u.y,'B');points=[pt(0,0,'O'),p,A,B];arc(0,0,r);steps=[join(A,B),bisect(A,B)];
+  title='한 점을 지나는 현의 곱 '+(k+1);formula='PA × PB = r²−OP²';q='현의 방향이 달라도 두 길이의 곱은 일정할까요?';explain='P는 원 내부에 있고 A와 B는 P를 지나는 직선과 원의 교점입니다. 식은 양의 거리의 곱입니다. 유향선분을 쓰는 점의 멱은 OP²−r²로 음수입니다.';
+ }else if(g===46){
+  let a=.2+.16*k,b=2-a,x=a-1,hv=Math.sqrt(a*b);points=[pt(-1,0,'A'),pt(1,0,'B'),pt(x,0,'P'),pt(x,hv,'Q')];arc(0,0,1,0,Math.PI);guides.push([pt(-1,0),pt(x,hv),pt(1,0)]);steps=[crease(0,1,0),crease(1,0,x)];
+  title='두 길이 '+fnum(a)+'와 '+fnum(b)+'의 평균';formula='√(ab) ≤ (a+b)/2 = 1';q='반원 위 점의 높이가 반지름을 넘을 수 있을까요?';explain='지름 길이 a+b=2인 반원에서 밑변을 a와 b로 나누는 수선의 높이는 √(ab)입니다. 점 Q가 반원 위에 놓인다는 기하 조건을 사용한 설명입니다.';
+ }else if(g===47){
+  let r=.25+.035*k,A=pt(-.6,-.5,'A'),B=pt(-.6+r,-.5,'B'),C=pt(-.6+r,-.5+r,'C'),D=pt(-.6,-.5+r,'D'),M=mid(A,B),E=pt(M.x+r*Math.sqrt(5)/2,M.y,'E');M.label='M';points=[A,B,C,D,M,E];closed([A,B,C,D]);arc(M.x,M.y,r*Math.sqrt(5)/2,0,Math.atan2(1,.5));steps=[bisect(A,B),join(M,C),join(A,E)];
+  title='정사각형에서 황금비 '+(k+1);formula='AE/AB = (1+√5)/2';q='밑변의 중점에서 위 꼭짓점까지의 길이는 얼마일까요?';explain='한 변 r인 정사각형에서 MC=√5 r/2입니다. M 중심의 이 길이를 밑변 방향으로 옮긴 E를 계산해 표시합니다. 원호는 길이 이동의 기준선이며 눈금 없는 종이접기만으로 E를 찾아내는 절차와는 구분합니다.';
+ }else if(g===48){
+  let r=.18+.02*k,A=pt(-.6,-.5,'A'),B=pt(-.6+r,-.5,'B'),C=pt(-.6+r,-.5+r,'C'),D=pt(-.6,-.5+r,'D'),E=pt(B.x+Math.SQRT2*r,B.y,'E');points=[A,B,C,D,E];closed([A,B,C,D]);arc(B.x,B.y,Math.SQRT2*r,0,3*Math.PI/4);steps=[join(B,D),join(A,E),bisect(A,B)];
+  title='정사각형에서 은비 '+(k+1);formula='AE/AB = 1+√2';q='정사각형의 대각선을 한 변 옆에 더하면 어떤 비율이 될까요?';explain='BD=√2 r이며 AE=r+BD입니다. 길이를 원호로 옮기는 기준선을 함께 표시합니다. 은비는 δ²=2δ+1을 만족합니다. 좌표로 구성한 탐구이며 무표식 접기만의 작도 절차는 아닙니다.';
+ }else{
+  let degrees=15+20*k,t=degrees*Math.PI/180,r=.75,A=pt(r,0,'A'),B=pt(r*Math.cos(t),r*Math.sin(t),'B');points=[pt(0,0,'O'),A,B];arc(0,0,r,0,t);rays=[0,degrees];steps=[crease(0,1,0),join(pt(0,0),B)];
+  title=degrees+'°를 라디안으로';formula='θ = '+fnum(t)+' rad / 호 길이 = rθ';q='반지름이 바뀌어도 호 길이를 반지름으로 나눈 비는 같을까요?';explain='라디안은 호의 길이와 반지름의 비입니다. 같은 끝점을 잇는 현의 길이와 호의 길이는 다릅니다. 표시된 호는 0°부터 지정 각도까지 반시계 방향입니다.';
+ }
+ ACTS.push({id:'paper-'+String(g*10+k+1).padStart(3,'0'),number:g*10+k+1,group:g+1,topic:TOPICS[g],title,steps,formula,q,explain,w,h,points,rays,guides});
+}
+
 if(typeof module!=='undefined')module.exports={PM,TOPICS,ACTS};

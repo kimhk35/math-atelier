@@ -9,6 +9,7 @@ const ExpansionMath={
  tiles(a,b){let x=0,y=0,w=a,h=b,level=0,tiles=[];while(w&&h){level++;if(w>=h){let n=Math.floor(w/h);for(let j=0;j<n;j++)tiles.push({x:x+j*h,y,size:h,level});x+=n*h;w%=h}else{let n=Math.floor(h/w);for(let j=0;j<n;j++)tiles.push({x,y:y+j*w,size:w,level});y+=n*w;h%=w}}return tiles}
 };
 function expandedDraw(){
+ if(MILESTONE_IDS.has(current.id))return milestoneDraw();
  const s=state,C=colors,id=current.id,M=ExpansionMath;let metrics=[],legend=[],meaning=current.teacher;
  const metric=(...rows)=>metrics=rows,leg=(...rows)=>legend=rows,init=(r=3)=>graphInit(-r,r,-r,r,true);
  const box=(x0,x1,y0,y1)=>{const h=Math.max(y1-y0,(x1-x0)*340/640),cy=(y0+y1)/2;graphInit(x0,x1,cy-h/2,cy+h/2,true)};

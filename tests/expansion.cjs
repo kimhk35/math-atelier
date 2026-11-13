@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs');
 const {labs,render,ctx}=require('../advanced-expansion/context.cjs')();
-assert.equal(labs.length,20);assert.equal(new Set(labs.map(l=>l.id)).size,20);
+assert.equal(labs.length,50);assert.equal(new Set(labs.map(l=>l.id)).size,50);
 let renders=0;
 for(const l of labs){
  const states=[l.defaults,...l.presets.map(p=>({...l.defaults,...p[1]}))];
@@ -17,7 +17,7 @@ vm.runInContext(`
  for(const [a,b] of [[1,1],[2,3],[16,16],[20,1]]){let sum=0,N=20000;for(let j=0;j<N;j++)sum+=ExpansionMath.beta((j+.5)/N,a,b)/N;if(Math.abs(sum-1)>1e-5)throw Error('Beta normalization')}
  if(ExpansionMath.bernstein(0,8)!==.5||ExpansionMath.bernstein(1,8)!==.5)throw Error('Bernstein endpoints');
 `,ctx);
-const {PM,ACTS,TOPICS}=require('../origami/model.js');assert.equal(ACTS.length,300);assert.equal(TOPICS.length,30);assert.equal(new Set(ACTS.map(a=>a.id)).size,300);
+const {PM,ACTS,TOPICS}=require('../origami/model.js');assert.equal(ACTS.length,500);assert.equal(TOPICS.length,50);assert.equal(new Set(ACTS.map(a=>a.id)).size,500);
 let steps=0;
 for(const a of ACTS){let faces=PM.sheet(a.w,a.h);for(const s of a.steps){const split=PM.split(faces,s.line);if(a.number>200)assert(split.fixed.length&&split.moving.length,a.id+' fold must cross the paper');faces=PM.fold(faces,s.line,s.open);const area=faces.reduce((n,f)=>n+PM.area(f.pts),0);assert(Math.abs(area-a.w*a.h)<1e-8,a.id+' area must be conserved');assert(faces.every(f=>f.pts.every(p=>Number.isFinite(p.x)&&Number.isFinite(p.y))),a.id+' finite coordinates');steps++}}
 for(const a of ACTS.filter(a=>a.group===21)){
