@@ -25,4 +25,50 @@ case 17:{let a=[30,45,60,72,90,108,120,135,150,180][k],p=2+k%5;title=a+'°를 '+
 case 18:r=(k+1)/11;title=(k+1)+'/22 확률 영역';steps=[st(1,0,-1+2*r,'세로선을 접고 펼치세요.',true),st(0,1,0,'가로 중심선을 접고 펼치세요.',true)];formula='왼쪽이면서 아래쪽일 확률 = '+(k+1)+'/22';q='확률을 넓이의 비로 계산하려면 어떤 가정이 필요할까요?';explain='종이 위의 점을 균일하게 고른다고 가정합니다. 왼쪽 비율 '+(k+1)+'/11과 아래쪽 비율 1/2의 곱입니다.';break;
 case 19:{const specs=[['책 접기',[[1,0,0]]],['삼각 기본형',[[1,-1,0]]],['문 접기',[[1,0,.5],[-1,0,.5]]],['중심 네 자국',[[1,0,0],[0,1,0],[1,1,0],[1,-1,0]]],['방석 기본형',[[1,1,1],[-1,1,1],[-1,-1,1],[1,-1,1]]],['네 칸 소책자',[[1,0,0],[0,1,0]]],['삼각형 네 겹',[[1,-1,0],[1,1,0]]],['오각형 모서리형',[[1,1,1]]],['육각형 양끝형',[[1,1,1],[-1,-1,1]]],['창문 네 변형',[[1,0,.5],[-1,0,.5],[0,1,.5],[0,-1,.5]]]];title=specs[k][0];steps=specs[k][1].map(([a,b,c],j)=>st(a,b,c,(j+1)+'번째 금색 선을 따라 접으세요.',k===3));formula='거리 보존과 면적 보존';q='바깥 윤곽과 겹 수를 비교하고 펼친 자국에서 이유를 찾아보세요.';explain='기본형에서 생기는 도형을 탐구합니다. 변의 수가 같아도 모든 변과 각이 같은 정다각형인 것은 아닙니다.';break}}
 ACTS.push({id:'paper-'+String(g*10+k+1).padStart(3,'0'),number:g*10+k+1,group:g+1,topic:TOPICS[g],title,steps,formula,q,explain,w,h,points,rays});}
+
+// Ten new investigations. Each includes ten explicitly labelled parameter variants.
+TOPICS.push('삼각형의 외심','삼각형의 무게중심','삼각형의 수심','원의 접선 포락선','타원의 접선 포락선','쌍곡선의 접선','조건부확률 영역','포함과 배제','이진수로 위치 찾기','제곱수와 차분');
+for(let g=20;g<30;g++)for(let k=0;k<10;k++){
+ let steps=[],points=[],rays=[],w=2,h=2,title='',formula='',q='',explain='';
+ const mark=(x,y,label)=>({x,y,label}),crease=(a,b,c,text)=>st(a,b,c,text||'표시된 선을 접고 펼쳐 자국을 남기세요.',true);
+ const P=mark(-.8,-.6,'A'),Q=mark(.8,-.6,'B'),R=mark(-.6+k*.13,.8,'C');
+ const join=(p,r,text)=>crease(r.y-p.y,p.x-r.x,(r.y-p.y)*p.x+(p.x-r.x)*p.y,text);
+ if(g===20){
+  points=[P,Q,R];let O=mark(0,(R.x*R.x+R.y*R.y-P.x*P.x-P.y*P.y)/(2*(R.y-P.y)),'O');points.push(O);
+  for(const [a,b] of [[P,Q],[Q,R],[R,P]])steps.push(crease(b.x-a.x,b.y-a.y,(b.x*b.x+b.y*b.y-a.x*a.x-a.y*a.y)/2,b.label+'를 '+a.label+'에 포갠 뒤 펼치세요.'));
+  title='외심과 같은 거리 '+(k+1);formula='OA = OB = OC';q='세 수직이등분선이 한 점을 지나는 이유는 무엇일까요?';explain='삼각형의 꼭짓점을 두 개씩 포개는 자국입니다. 두 자국의 교점 O는 세 꼭짓점까지의 거리가 같습니다. 화면의 점은 접기 전 종이의 기준점입니다.';
+ }else if(g===21){
+  points=[P,Q,R,mark(R.x/3,(P.y+Q.y+R.y)/3,'G')];
+  for(const [a,b,c] of [[P,Q,R],[Q,R,P],[R,P,Q]])steps.push(join(a,{x:(b.x+c.x)/2,y:(b.y+c.y)/2},a.label+'와 마주 보는 변의 중점을 잇는 선을 접고 펼치세요.'));
+  title='중선의 2 대 1 분할 '+(k+1);formula='AG : GM = 2 : 1';q='꼭짓점을 옮겨도 무게중심의 분할비는 같을까요?';explain='중점 좌표를 이용해 지정한 중선을 접습니다. 세 꼭짓점 좌표의 평균이 G입니다. 균일한 삼각형 판의 질량중심에 해당합니다. 정사각형 종이 전체의 질량중심을 뜻하지 않습니다.';
+ }else if(g===22){
+  points=[P,Q,R,mark(R.x,-.6+(.64-R.x*R.x)/1.4,'H')];
+  for(const [a,b,c] of [[P,Q,R],[Q,R,P],[R,P,Q]])steps.push(crease(c.x-b.x,c.y-b.y,(c.x-b.x)*a.x+(c.y-b.y)*a.y,a.label+'를 지나고 맞은편 변에 수직인 자국을 남기세요.'));
+  title='세 높이의 교점 '+(k+1);formula='AH ⟂ BC / BH ⟂ AC / CH ⟂ AB';q='수심과 무게중심은 항상 같은 점일까요?';explain='높이는 꼭짓점에서 맞은편 변의 직선에 내린 수선입니다. 서로 다른 세 높이가 H에서 만납니다. 선의 위치는 좌표로 지정했습니다.';
+ }else if(g===23){
+  let r=.3+.05*k;points=[mark(0,0,'O')];for(let j=0;j<12;j++){let t=j*Math.PI/6;steps.push(crease(Math.cos(t),Math.sin(t),r,'반지름에 수직인 '+(j+1)+'번째 접선을 접고 펼치세요.'))}
+  title='반지름 '+fnum(r)+' 원의 접선';formula='x cos θ + y sin θ = r';q='접선의 수를 늘리면 안쪽 경계는 어떻게 변할까요?';explain='중심에서 접는 직선까지의 거리는 r입니다. 12개 접선이 만드는 안쪽 다각형은 원에 외접합니다. 유한한 자국의 경계는 원 그 자체가 아닙니다.';
+ }else if(g===24){
+  let a=.9,b=.25+.05*k,c=Math.sqrt(a*a-b*b);points=[mark(-c,0,'F₁'),mark(c,0,'F₂')];
+  for(let j=0;j<16;j++){let t=j*Math.PI/8;steps.push(crease(Math.cos(t)/a,Math.sin(t)/b,1,'타원 위 점에 대응하는 접선을 접고 펼치세요.'))}
+  title='단축 '+fnum(2*b)+' 타원의 접선';formula='x cos θ / a + y sin θ / b = 1';q='두 초점을 가까이 옮기면 접선 자국의 경계는 어떻게 될까요?';explain='타원 (a cos θ  b sin θ)의 접선을 좌표로 지정했습니다. a=0.9이며 두 초점은 ±√(a²−b²)입니다. 자국은 곡선의 일부를 둘러싸는 유한한 근사입니다.';
+ }else if(g===25){
+  let a=.22+.02*k,b=.25,c=Math.hypot(a,b);points=[mark(-c,0,'F₁'),mark(c,0,'F₂')];
+  for(const sign of [-1,1])for(let j=0;j<6;j++){let t=-.8+j*.32;steps.push(crease(sign*Math.cosh(t)/a,-Math.sinh(t)/b,1,'쌍곡선의 '+(sign>0?'오른쪽':'왼쪽')+' 가지 접선을 접고 펼치세요.'))}
+  title='쌍곡선 양쪽 접선 탐구 '+(k+1);formula='xx₀/a² − yy₀/b² = 1';q='두 가지 사이의 빈 공간과 접선의 기울기는 어떻게 변할까요?';explain='x²/a²−y²/b²=1의 두 가지에서 선택한 12개 점의 접선을 표시합니다. 유한한 범위만 관찰합니다. 쌍곡선 전체를 실제 종이 위에 그리는 절차는 아닙니다.';
+ }else if(g===26){
+  let a=(k+1)/11,b=.25+.05*k;steps=[crease(1,0,-1+2*a,'왼쪽 영역 A의 경계선을 접고 펼치세요.'),crease(0,1,-1+2*b,'아래 영역 B의 경계선을 접고 펼치세요.')];points=[mark(-1+a,-1+b,'A∩B')];
+  title='A 안에서 B일 확률 '+(k+1);formula='P(B|A) = P(A∩B)/P(A) = '+fnum(b);q='전체 종이 대신 A만 표본공간으로 삼으면 분모가 어떻게 바뀔까요?';explain='균일한 점 선택을 가정합니다. A는 왼쪽 세로 띠이며 B는 아래 가로 띠입니다. 두 사건은 독립이므로 조건부확률은 B의 높이 비율과 같습니다. 모든 사건이 독립인 것은 아닙니다.';
+ }else if(g===27){
+  let a=(k+1)/11,b=(10-k)/11;steps=[crease(1,0,-1+2*a,'왼쪽 띠 A의 경계를 접고 펼치세요.'),crease(0,1,-1+2*b,'아래 띠 B의 경계를 접고 펼치세요.')];points=[mark(-1+a,-1+b,'겹침')];
+  title='겹친 넓이 한 번 빼기 '+(k+1);formula='P(A∪B) = a+b−ab = '+fnum(a+b-a*b);q='두 영역의 넓이를 더하면 어디를 두 번 세게 될까요?';explain='한 변 2인 종이에서 각 비율 a와 b를 사용합니다. 겹친 직사각형 비율 ab를 한 번 빼야 합집합 비율을 얻습니다. 눈금으로 경계를 지정합니다.';
+ }else if(g===28){
+  let r=(k+1)/11,lo=0,hi=1,bits='';points=[mark(-1+2*r,0,'P')];for(let j=0;j<6;j++){let mid=(lo+hi)/2;bits+=r>=mid?'1':'0';steps.push(crease(1,0,-1+2*mid,(j+1)+'번째 구간의 중점을 접고 P가 있는 반쪽을 선택하세요.'));if(r>=mid)lo=mid;else hi=mid}
+  title=(k+1)+'/11의 이진 위치';formula='0.'+bits+'…₂ / 구간 폭 1/64';q='6번 이등분한 구간이 원래 위치를 정확히 포함하나요?';explain='전체 가로 길이를 1로 정규화한 좌표입니다. P를 포함한 구간을 반복 이등분합니다. 각 단계는 접고 펼쳐 자국만 남깁니다. 유한한 이진 근사와 원래 유리수의 무한 전개를 구별하세요.';
+ }else{
+  let n=k+6;for(let j=1;j<=5;j++)steps.push(crease(1,0,-1+2*(j/n)**2,j+'²/'+n+'² 위치를 접고 펼치세요.'));
+  title='제곱수 간격과 두 번째 차분 '+(k+1);formula='xⱼ = −1+2j²/'+n+'² / Δ²x = '+fnum(4/n**2);q='간격은 일정하지 않은데 간격의 차이는 일정할까요?';explain='제곱수의 첫 차분은 연속한 홀수입니다. 좌표를 일정 비율로 축소해도 두 번째 차분이 일정하다는 성질은 유지됩니다. 위치는 눈금으로 지정합니다.';
+ }
+ ACTS.push({id:'paper-'+String(g*10+k+1).padStart(3,'0'),number:g*10+k+1,group:g+1,topic:TOPICS[g],title,steps,formula,q,explain,w,h,points,rays});
+}
 if(typeof module!=='undefined')module.exports={PM,TOPICS,ACTS};

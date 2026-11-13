@@ -1,0 +1,19 @@
+const fs=require('node:fs');
+const revision='20261113-expansion4';
+const {labs,render}=require('./advanced-expansion/context.cjs')();
+if(labs.length!==20)throw Error('Expected twenty new advanced experiments');
+for(const l of labs){const result=render(l,{});if(/NaN|Infinity|undefined/.test(result.svg+result.metrics))throw Error('Invalid experiment: '+l.id);fs.writeFileSync('public/advanced-math/thumbs/'+l.id+'.svg','<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 450"><style>text{font:14px system-ui;fill:#536777}.label{font-weight:700}</style>'+result.svg.replaceAll('var(--ui-sheet)','#fff').replaceAll('var(--ui-grid)','#e4eaf2').replaceAll('var(--ui-muted)','#5a6880')+'</svg>')}
+fs.copyFileSync('advanced-expansion/labs.js','public/advanced-math/expanded-labs.js');fs.copyFileSync('advanced-expansion/render.js','public/advanced-math/expanded-render.js');
+let advanced=fs.readFileSync('public/advanced-math/index.html','utf8');
+advanced=advanced.replace('<script src="render.js?v=50-1"></script>','<script src="expanded-labs.js?v='+revision+'"></script><script src="render.js?v='+revision+'"></script><script src="expanded-render.js?v='+revision+'"></script>');
+advanced=advanced.replaceAll('50개','70개').replaceAll('50가지','70가지').replaceAll('7개 영역','9개 영역');
+fs.writeFileSync('public/advanced-math/index.html',advanced);
+let renderer=fs.readFileSync('public/advanced-math/render.js','utf8').replace('function extraDraw(){','function extraDraw(){if(EXPANSION_IDS.has(current.id))return expandedDraw();');fs.writeFileSync('public/advanced-math/render.js',renderer);
+let catalogue=fs.readFileSync('public/atelier.js','utf8');const groupCounts={};const entries=labs.map(l=>({id:'advanced-'+l.id,grade:18,unit:l.group,lesson:l.group+'.'+(100+(groupCounts[l.group]=(groupCounts[l.group]||0)+1)),module:'advanced-math',title:l.name,type:'조작',time:'15분',color:'#007c78',tags:['고급수학','영재고',l.name],desc:l.desc,obs:[l.teacher],q:l.questions[0],formula:l.formula,links:[],npred:3}));
+catalogue=catalogue.replace('for (const lab of PLUS_LABS)','M[18].push([8,"확률과 정보"],[9,"미분방정식과 동역학"]);\ng.push(...'+JSON.stringify(entries)+');\nfor (const lab of PLUS_LABS)').replaceAll('심화 탐구 50개','심화 탐구 70개');fs.writeFileSync('public/atelier.js',catalogue);
+let root=fs.readFileSync('public/index.html','utf8').replace(/atelier\.js\?[^"']*/g,'atelier.js?v='+revision);fs.writeFileSync('public/index.html',root);
+const note='<li><h3>고급수학 70개와 종이접기 300개로 확장</h3><p>고급수학에 직교화와 곡률 및 베이즈 갱신과 미분방정식 등 20개 조작 실험을 추가했습니다. 종이접기는 삼각형의 중심과 접선 포락선 등 10개 주제의 100개 활동을 더했습니다. 유형별 조건 변형이 포함됩니다.</p><a class="an-more" href="/advanced-math/#gram-schmidt">새 고급수학 실험 열기 →</a><br><a class="an-more" href="/origami/#paper-201">새 종이접기 활동 열기 →</a></li>';
+for(const p of ['public/updates/index.html','public/updates/notice-content.js']){let s=fs.readFileSync(p,'utf8');s=s.replace('<ol class="an-list">','<ol class="an-list">'+note);if(p.endsWith('.js')){const start=s.indexOf('export const NOTICE_BODY = ');const body=JSON.parse(s.slice(start+'export const NOTICE_BODY = '.length).trim().replace(/;$/,''));s=s.slice(0,start)+'export const NOTICE_BODY = '+JSON.stringify(body.replace('<ol class="an-list">','<ol class="an-list">'+note))+';\n'}fs.writeFileSync(p,s)}
+let policy=fs.readFileSync('public/updates/notice-policy.js','utf8').replace('motion3-hidden-day','expansion4-hidden-day');fs.writeFileSync('public/updates/notice-policy.js',policy);
+let sw=fs.readFileSync('public/sw.js','utf8').replace(/const VERSION = "[^"]+";/,'const VERSION = "'+revision+'";').replace('const CORE = [','const CORE = ["/advanced-math/expanded-labs.js?v='+revision+'", "/advanced-math/expanded-render.js?v='+revision+'", "/advanced-math/render.js?v='+revision+'", ');fs.writeFileSync('public/sw.js',sw);
+console.log('Advanced mathematics: 70 experiments / Paper folding: 300 activities across 30 topics.');
