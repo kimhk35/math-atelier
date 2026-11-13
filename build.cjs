@@ -11,3 +11,4 @@ console.log('Verified '+Object.keys(manifest).length+' source files. Advanced Ma
 require('./integrate-paper.cjs');
 
 require('./integrate-design.cjs');
+require('./integrate-menu.cjs');

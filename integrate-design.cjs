@@ -1,5 +1,5 @@
 const fs=require('node:fs');
-const version='20261113-theme2';
+const version='20261113-motion3';
 fs.cpSync('design','public/atelier-ui',{recursive:true});
 const read=p=>fs.readFileSync('public/'+p,'utf8'),write=(p,s)=>fs.writeFileSync('public/'+p,s);
 const fonts='<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Barlow+Condensed:wght@500;600;700&display=swap">';
