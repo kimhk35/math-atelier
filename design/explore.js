@@ -4,6 +4,10 @@
   const el=(tag,cls,text)=>{const n=document.createElement(tag);n.className=cls||'';if(text)n.textContent=text;return n};
   let groupChoice='전체';
   function enhance(){
+    const home=document.querySelector('.v3-home');
+    if(home&&!home.querySelector('.ae-new-lab')){
+      const box=el('section','ae-new-lab');box.innerHTML='<span class="ae-kicker">NEW · MATH × SOCIETY</span><h2>공정한 나눔 실험실</h2><p>비율대로 나눴는데 누군가 손해를 본다면? 모둠 인원과 배분 수를 직접 바꾸며 반올림의 함정과 공정성의 조건을 탐구하세요.</p><a href="/fair-share/">새 실험 시작하기 →</a><span class="ae-new-meta">중학교 이상 · 15분 · 3가지 탐구 상황</span>';home.prepend(box);
+    }
     const courses=document.querySelector('.v3-courses');
     if(courses&&!courses.querySelector('.ae-discovery')){
       const groups=[...courses.querySelectorAll('.v3-cgroup')];
