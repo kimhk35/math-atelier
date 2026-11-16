@@ -13,3 +13,5 @@ require('./integrate-paper.cjs');
 require('./integrate-design.cjs');
 require('./integrate-menu.cjs');
 require('./integrate-expansion.cjs');
+
+require("./integrate-explore.cjs");
