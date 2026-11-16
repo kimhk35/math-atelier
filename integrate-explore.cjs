@@ -1,5 +1,6 @@
 const fs=require('node:fs');
-const version='20261116-discovery';
+const version='20261116-fair-share';
+fs.cpSync('fair-share','public/fair-share',{recursive:true});
 for(const file of ['index.html','advanced-math/index.html','origami/index.html','updates/index.html']){
  let html=fs.readFileSync('public/'+file,'utf8');
  const css=`<link rel="stylesheet" href="/atelier-ui/explore.css?v=${version}">`;
