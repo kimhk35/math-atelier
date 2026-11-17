@@ -224,11 +224,14 @@
       challenge.append(element('summary', '', '한 걸음 더 생각하기'), element('p', '', item.challenge));
       section.append(challenge);
     }
-    if (item.tryIt?.url && /^\/(?!\/)/.test(item.tryIt.url)) {
-      const link = element('a', 'related', item.tryIt.label + ' →');
-      link.href = item.tryIt.url;
-      section.append(link);
+    const links = element('div', 'related-links');
+    for (const resource of [item.miniLab, item.tryIt]) {
+      if (!resource?.url || !/^\/(?!\/)/.test(resource.url)) continue;
+      const link = element('a', 'related', resource.label + ' →');
+      link.href = resource.url;
+      links.append(link);
     }
+    if (links.childElementCount) section.append(links);
     return section;
   }
 

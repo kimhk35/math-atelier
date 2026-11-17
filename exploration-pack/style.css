@@ -11,6 +11,9 @@ html { scroll-padding-top: 18px; }
   border-color: transparent;
   font-weight: 700;
 }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+.hero-actions a { color: #eaf3fb; padding: 8px 0; font-weight: 650; text-underline-offset: .22em; }
+.related-links { display: flex; flex-wrap: wrap; column-gap: 16px; }
 .hero-map span { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: center; }
 .hero-map b { grid-column: 1; margin: 0; font-size: clamp(17px, 2.3vw, 22px); }
 .hero-map output {

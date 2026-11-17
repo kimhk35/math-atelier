@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="연체 건수는 30건으로 두고 전체 대출 건수를 바꿔 두 도서관의 연체율을 비교하는 수학 실험입니다.">
+  <title>같은 30건인데 왜 비율이 다를까? | 수학 판단 공방</title>
+  <link rel="stylesheet" href="/atelier-ui/theme.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="lab.css">
+  <script src="/atelier-ui/theme.js"></script>
+  <script src="lab.js" defer></script>
+</head>
+<body class="denominator-lab">
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header>
+    <a class="brand" href="/#/dashboard">McKay <strong>Math Atelier</strong></a>
+    <nav aria-label="Atelier 탐색">
+      <a href="../#data-denominator">원래 문제</a>
+      <a href="/updates/#d1118">업데이트</a>
+      <button type="button" class="atelier-theme">어두운 화면</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="lab-intro" aria-labelledby="lab-title">
+      <a href="../">수학 판단 공방</a>
+      <h1 id="lab-title">같은 30건인데 왜 비율이 다를까?</h1>
+      <p>두 도서관의 연체 건수는 각각 30건입니다. 전체 대출 건수만 바꾸면 연체율은 어떻게 달라질까요?</p>
+    </section>
+
+    <section id="prediction" class="panel" aria-labelledby="prediction-title">
+      <h2 id="prediction-title" tabindex="-1">1. 먼저 예상하기</h2>
+      <p>처음에 A 도서관은 300건을 대출했고 B 도서관은 1000건을 대출했습니다.</p>
+      <form id="prediction-form" hidden>
+        <fieldset class="predictions">
+          <legend>어느 도서관의 연체율이 더 높을까요?</legend>
+          <label class="choice"><input type="radio" name="prediction" value="a" required> A 도서관</label>
+          <label class="choice"><input type="radio" name="prediction" value="equal"> 두 곳이 같음</label>
+          <label class="choice"><input type="radio" name="prediction" value="b"> B 도서관</label>
+        </fieldset>
+        <button type="submit" class="primary" id="reveal" disabled>실험 결과 보기</button>
+      </form>
+      <p id="prediction-feedback" class="prediction-feedback" hidden></p>
+      <noscript><p>직접 실험하려면 브라우저에서 JavaScript를 켜 주세요.</p></noscript>
+    </section>
+
+    <div id="experiment" hidden>
+      <section class="panel lab-experiment" aria-labelledby="experiment-title">
+        <div class="lab-heading">
+          <h2 id="experiment-title" tabindex="-1">2. 대출 건수 바꾸기</h2>
+          <button type="button" class="secondary" id="reset">처음부터 다시</button>
+        </div>
+        <p>연체 건수는 두 곳 모두 30건입니다. 전체 대출 건수는 30건부터 3000건까지 바꿀 수 있습니다.</p>
+
+        <div class="lab-grid">
+          <div class="loan-controls">
+            <fieldset class="loan-control loan-a">
+              <legend>A 도서관</legend>
+              <label for="a-total">전체 대출 건수</label>
+              <div class="loan-input"><input id="a-total" type="number" min="30" max="3000" step="1" value="300" required><span>건</span></div>
+              <label class="sr-only" for="a-range">A 도서관 대출 건수 조절</label>
+              <input id="a-range" type="range" min="30" max="3000" step="1" value="300">
+            </fieldset>
+            <fieldset class="loan-control loan-b">
+              <legend>B 도서관</legend>
+              <label for="b-total">전체 대출 건수</label>
+              <div class="loan-input"><input id="b-total" type="number" min="30" max="3000" step="1" value="1000" required><span>건</span></div>
+              <label class="sr-only" for="b-range">B 도서관 대출 건수 조절</label>
+              <input id="b-range" type="range" min="30" max="3000" step="1" value="1000">
+            </fieldset>
+          </div>
+
+          <figure class="rate-chart">
+            <figcaption>연체율 비교</figcaption>
+            <div class="rate-row loan-a">
+              <div class="rate-label"><b>A 도서관</b><span id="a-fraction"></span><strong id="a-rate"></strong></div>
+              <div class="rate-track" aria-hidden="true"><div id="a-bar" class="rate-bar"></div></div>
+            </div>
+            <div class="rate-row loan-b">
+              <div class="rate-label"><b>B 도서관</b><span id="b-fraction"></span><strong id="b-rate"></strong></div>
+              <div class="rate-track" aria-hidden="true"><div id="b-bar" class="rate-bar"></div></div>
+            </div>
+            <div class="chart-axis" aria-label="그래프 눈금"><span>0%</span><span id="axis-middle"></span><span id="axis-max"></span></div>
+            <p class="lab-note">두 막대의 눈금은 같습니다. 연체율은 소수 둘째 자리까지 표시합니다.</p>
+            <p class="comparison" id="comparison" role="status"></p>
+          </figure>
+        </div>
+      </section>
+
+      <section class="panel lab-challenge" aria-labelledby="challenge-title">
+        <h2 id="challenge-title">3. 두 연체율을 같게 만들기</h2>
+        <p>대출 건수를 조절해 두 연체율을 같게 만들어 보세요. A의 대출 건수를 그대로 두고 B만 바꿔도 됩니다.</p>
+        <p id="challenge-result" role="status" hidden>두 연체율이 같아졌습니다. 연체 건수와 전체 대출 건수 중 무엇을 같게 만들었는지 설명해 보세요.</p>
+        <details class="inquiry-hint">
+          <summary>힌트 보기</summary>
+          <p>연체율은 30을 전체 대출 건수로 나눈 값입니다. 두 분수에서 이미 같은 수가 무엇인지 확인해 보세요.</p>
+        </details>
+      </section>
+    </div>
+    <footer><a href="../#data-denominator">원래 문제로 돌아가기</a></footer>
+  </main>
+</body>
+</html>
