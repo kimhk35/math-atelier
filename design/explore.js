@@ -6,7 +6,9 @@
   function enhance(){
     const home=document.querySelector('.v3-home');
     if(home&&!home.querySelector('.ae-new-lab')){
-      const box=el('section','ae-new-lab');box.innerHTML='<span class="ae-kicker">NEW · MATH × SOCIETY</span><h2>수학 판단 공방 · 60가지 탐구</h2><p>공정성과 선택 20개, 데이터 읽기 20개, 논증과 알고리즘 20개. 서로 다른 상황에서 판단하고 근거를 확인하며 나의 설명을 남겨 보세요.</p><a href="/exploration-pack/">60개 활동 둘러보기 →</a><span class="ae-new-meta">3개 영역 · 상황형 추론 · 피드백과 성찰</span><p><a href="/fair-share/">공정한 나눔 조작 실험 →</a></p>';home.prepend(box);
+      const box = el('section', 'ae-new-lab');
+      box.innerHTML = '<span class="ae-kicker">수학으로 판단하는 60가지 상황</span><h2>수학 판단 공방</h2><p>공정성과 선택 및 데이터 읽기와 논증을 탐구합니다. 문제별 힌트로 판단을 점검하고 나의 근거를 기록해 보세요.</p><a href="/exploration-pack/">수학 판단 공방 열기 →</a><span class="ae-new-meta">3개 영역 / 중학교 이상</span><p><a href="/fair-share/">공정한 나눔 조작 실험 →</a></p>';
+      home.prepend(box);
     }
     const courses=document.querySelector('.v3-courses');
     if(courses&&!courses.querySelector('.ae-discovery')){
