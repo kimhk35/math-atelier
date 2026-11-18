@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="비율과 공정한 배분 및 반례를 다루는 중학교 수학 수업 꾸러미입니다. 예측하고 확인한 뒤 토론하는 15분 활동을 학습지로 인쇄하거나 QR로 공유할 수 있습니다.">
+  <title>15분 수업 꾸러미 | 수학 판단 공방</title>
+  <link rel="stylesheet" href="/atelier-ui/theme.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="classroom.css">
+  <script src="/atelier-ui/theme.js"></script>
+  <script type="module" src="classroom.js"></script>
+</head>
+<body class="classroom">
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header>
+    <a class="brand" href="/#/dashboard">McKay <strong>Math Atelier</strong></a>
+    <nav aria-label="Atelier 탐색">
+      <a href="../">수학 판단 공방</a>
+      <a href="/updates/#d1118">업데이트</a>
+      <button type="button" class="atelier-theme">어두운 화면</button>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="class-intro" aria-labelledby="class-title">
+      <h1 id="class-title">15분 수업 꾸러미</h1>
+      <p>중학교 수학 수업에서 바로 활용할 수 있습니다. 주제를 골라 학생에게 QR로 공유하거나 학습지를 인쇄하세요.</p>
+    </section>
+    <nav class="lesson-picker" aria-label="수업 주제 선택">
+      <a href="#ratio"><span>자료 해석</span><strong>같은 건수와 다른 비율</strong></a>
+      <a href="#fairness"><span>비례배분</span><strong>공정한 배분의 기준</strong></a>
+      <a href="#counterexample"><span>논증</span><strong>한 번의 반례가 바꾸는 규칙</strong></a>
+    </nav>
+
+    <article class="panel lesson" id="ratio" aria-labelledby="ratio-title">
+      <div class="lesson-head">
+        <div>
+          <h2 id="ratio-title" tabindex="-1">같은 건수와 다른 비율</h2>
+          <p>분모가 다른 두 비율을 비교하고 비율과 건수가 각각 필요한 이유를 설명합니다.</p>
+        </div>
+        <div class="lesson-actions" hidden>
+          <button type="button" data-qr>수업 QR 공유</button>
+          <button type="button" data-print>학습지 인쇄</button>
+        </div>
+      </div>
+      <p class="student-line">이름 ____________________</p>
+      <ol class="lesson-steps">
+        <li>
+          <h3>예측하기 <span>3분</span></h3>
+          <p>A 도서관은 대출 300건 중 연체 30건입니다. B 도서관은 대출 1000건 중 연체 30건입니다. 어느 쪽의 연체율이 높을지 예상하고 이유를 적어 보세요.</p>
+          <div class="resource-links"><a href="../#data-denominator">도입 문제 열기 →</a></div>
+          <div class="write-lines" aria-hidden="true"></div>
+        </li>
+        <li>
+          <h3>바꿔 보기 <span>7분</span></h3>
+          <p>A의 대출은 300건으로 둡니다. B의 대출 건수가 300건일 때와 600건일 때 두 곳의 연체율을 비교하세요. 두 곳의 연체 건수는 각각 30건입니다.</p>
+          <div class="resource-links"><a href="../denominator/">분모를 바꾸는 미니 실험 →</a></div>
+          <div class="write-lines" aria-hidden="true"></div>
+        </li>
+        <li>
+          <h3>설명하고 토론하기 <span>5분</span></h3>
+          <p>A 서비스는 요청 100건 중 오류 2건입니다. B 서비스는 요청 10000건 중 오류 200건입니다. 품질을 비교할 때와 처리할 오류 건수를 예상할 때 각각 어떤 수치를 볼지 설명하세요.</p>
+          <div class="resource-links"><a href="../#data-exposure">비교 문제 열기 →</a></div>
+          <div class="write-lines" aria-hidden="true"></div>
+        </li>
+      </ol>
+      <details class="inquiry-hint teacher-note">
+        <summary>교사용 진행 팁과 확인 답안</summary>
+        <p>도입에서는 A가 10%이고 B가 3%입니다. 실험에서 B가 300건이면 둘 다 10%입니다. B가 600건이면 A는 10%이고 B는 5%입니다.</p>
+        <p>두 서비스의 오류율은 모두 2%입니다. 처리할 오류는 B가 A의 100배입니다. 실제 업무 시간을 비교하려면 오류 한 건을 처리하는 데 드는 시간도 확인해야 합니다. 마지막에 어떤 질문을 받았는지 먼저 확인하도록 지도하세요.</p>
+      </details>
+    </article>
+
+    <article class="panel lesson" id="fairness" aria-labelledby="fairness-title">
+      <div class="lesson-head">
+        <div>
+          <h2 id="fairness-title" tabindex="-1">공정한 배분의 기준</h2>
+          <p>똑같이 주는 배분과 부족한 몫을 배려하는 배분을 비교합니다.</p>
+        </div>
+        <div class="lesson-actions" hidden>
+          <button type="button" data-qr>수업 QR 공유</button>
+          <button type="button" data-print>학습지 인쇄</button>
+        </div>
+      </div>
+      <p class="student-line">이름 ____________________</p>
+      <ol class="lesson-steps">
+        <li>
+          <h3>예측하기 <span>3분</span></h3>
+          <p>세 모둠에 색연필이 각각 2개와 5개와 7개 있습니다. 모둠당 목표는 8개입니다. 새 색연필 6개를 똑같이 나눌 때와 부족한 수에 비례해 나눌 때 각 모둠의 정확한 몫을 비교하세요. 아직 반올림하지 마세요.</p>
+          <div class="resource-links"><a href="../#decision-need-gap">도입 문제 열기 →</a></div>
+          <div class="write-lines" aria-hidden="true"></div>
+        </li>
+        <li>
+          <h3>바꿔 보기 <span>7분</span></h3>
+          <p>이번에는 인원이 같은 세 모둠에 물건 2개를 나눕니다. 각 모둠의 몫을 따로 반올림하면 몇 개가 필요한지 계산하세요. 2개만 쓸 수 있을 때 가능한 배분도 적어 보세요.</p>
+          <div class="resource-links"><a href="/fair-share/">공정한 나눔 실험 열기 →</a><span>반올림의 함정을 선택하세요.</span></div>
+          <div class="write-lines" aria-hidden="true"></div>
+        </li>
+        <li>
+          <h3>설명하고 토론하기 <span>5분</span></h3>
+          <p>두 배분안의 만족도는 X가 (8 / 6 / 2)이고 Y가 (5 / 5 / 5)입니다. 합계를 가장 크게 하는 기준과 가장 적게 받는 사람을 우선하는 기준은 각각 어느 안을 고를까요?</p>
+          <div class="resource-links"><a href="../#decision-maximin">최대최소 기준 더 탐구하기 →</a></div>
+          <div class="write-lines" aria-hidden="true"></div>
+        </li>
+      </ol>
+      <details class="inquiry-hint teacher-note">
+        <summary>교사용 진행 팁과 확인 답안</summary>
+        <p>똑같이 나누면 각각 2개입니다. 부족한 수는 각각 6개와 3개와 1개이므로 비례 몫은 각각 3.6개와 1.8개와 0.6개입니다. 정확한 몫과 실제 정수 배분을 구분하세요.</p>
+        <p>각각 2/3개를 반올림하면 1개씩 총 3개가 됩니다. 실제 2개를 배분하려면 두 모둠에 1개씩 줄 수 있습니다. 토론에서는 X의 합계 16과 Y의 합계 15를 비교하세요. 최솟값은 X가 2이고 Y가 5입니다.</p>
+      </details>
+    </article>
+
+    <article class="panel lesson" id="counterexample" aria-labelledby="counterexample-title">
+      <div class="lesson-head">
+        <div>
+          <h2 id="counterexample-title" tabindex="-1">한 번의 반례가 바꾸는 규칙</h2>
+          <p>규칙이 언제나 맞는다는 주장에 반례를 찾고 성립 조건을 확인합니다.</p>
+        </div>
+        <div class="lesson-actions" hidden>
+          <button type="button" data-qr>수업 QR 공유</button>
+          <button type="button" data-print>학습지 인쇄</button>
+        </div>
+      </div>
+      <p class="student-line">이름 ____________________</p>
+      <ol class="lesson-steps">
+        <li>
+          <h3>예측하기 <span>3분</span></h3>
+          <p>1원과 3원과 4원짜리 동전이 충분히 있습니다. 남은 금액 이하의 가장 큰 동전을 하나씩 고르면 언제나 동전 수가 최소일지 예상하세요. 먼저 8원에 적용해 보세요.</p>
+          <div class="write-lines" aria-hidden="true"></div>
+        </li>
+        <li>
+          <h3>바꿔 보기 <span>7분</span></h3>
+          <p>금액을 6원으로 바꿉니다. 같은 규칙으로 고른 동전을 적고 더 적은 동전을 쓰는 방법을 찾아보세요. 찾은 방법이 최소인 이유까지 써 보세요.</p>
+          <div class="resource-links"><a href="../#logic-greedy-coins">동전 문제 열기 →</a></div>
+          <div class="write-lines" aria-hidden="true"></div>
+        </li>
+        <li>
+          <h3>설명하고 토론하기 <span>5분</span></h3>
+          <p>왼쪽부터 1 / 4 / 2 / 3 / 5가 놓여 있습니다. 찾는 수가 가운데 수보다 작으면 오른쪽을 버리고 크면 왼쪽을 버립니다. 4를 찾을 때 이 규칙을 적용하면 4를 놓치는 이유는 무엇인가요? 배열을 어떻게 바꾸면 규칙이 작동할까요?</p>
+          <div class="resource-links"><a href="../#logic-binary-precondition">탐색 규칙 문제 열기 →</a></div>
+          <div class="write-lines" aria-hidden="true"></div>
+        </li>
+      </ol>
+      <details class="inquiry-hint teacher-note">
+        <summary>교사용 진행 팁과 확인 답안</summary>
+        <p>8원은 4+4로 만들 수 있어 2개면 됩니다. 6원은 큰 동전부터 고르면 4+1+1이지만 3+3이면 2개입니다. 6원짜리 동전이 없으므로 2개가 최소입니다.</p>
+        <p>가운데가 2이므로 4를 찾을 때는 왼쪽을 버립니다. 그런데 4가 왼쪽에 있으므로 놓치게 됩니다. 배열을 오름차순으로 정렬하면 가운데 수보다 큰 값은 오른쪽에 있으므로 왼쪽을 버릴 수 있습니다.</p>
+      </details>
+    </article>
+    <p class="class-status" id="class-status" role="status"></p>
+  </main>
+</body>
+</html>

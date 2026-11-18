@@ -1,14 +1,19 @@
 const fs = require('node:fs');
 
-const version = '20261118-denominator-lab';
+const version = '20261118-classroom-kits';
 const releaseId = 'd1118';
 const date = '2026년 11월 18일';
-const title = '수학 판단 공방 60개 탐구를 개선했습니다';
+const title = '수학 판단 공방에 15분 수업 꾸러미를 추가했습니다';
 const updatesUrl = '/updates/#' + releaseId;
-const stats = [[60, '탐구 활동', '개'], [3, '탐구 영역', '개'], [60, '문제별 힌트', '개']];
+const stats = [[60, '탐구 활동', '개'], [3, '수업 꾸러미', '종'], [60, '문제별 힌트', '개']];
 const content = `
   <p class="an-intro">11월 16일에 추가한 수학 판단 공방을 업데이트했습니다. 공정성과 선택 / 데이터 읽기 / 논증과 알고리즘을 주제로 영역마다 20개 활동을 제공합니다.</p>
   <ol class="an-list">
+    <li>
+      <h3>15분 수업 꾸러미 3종</h3>
+      <p>같은 건수와 다른 비율 및 공정한 배분과 반례를 주제로 수업 꾸러미를 만들었습니다. 예측 3분과 탐구 7분과 토론 5분으로 구성했습니다. 수업 QR 공유와 학생용 학습지 인쇄 및 교사용 답안을 제공합니다.</p>
+      <a class="an-more" href="/exploration-pack/classroom/">수업 꾸러미 열기 →</a>
+    </li>
     <li>
       <h3>분모를 바꾸는 미니 실험</h3>
       <p>연체 건수를 30건으로 고정하고 도서관별 전체 대출 건수를 바꿔 보세요. 어느 쪽의 연체율이 높은지 먼저 예상하고 막대그래프로 확인합니다. 두 연체율이 같아지는 조건도 찾아볼 수 있습니다.</p>
